@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Local data and generated artifacts
+data_v2/
+outputs/
+runs/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.npy
+*.npz
+*.tif
+*.tiff
+*.png
+*.jpg
+*.jpeg
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+
+# IDE/system
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
