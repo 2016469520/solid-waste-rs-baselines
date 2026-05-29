@@ -8,6 +8,7 @@ from typing import Dict, List
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import logging
 
 
 DEFAULT_MODELS = [
@@ -139,8 +140,8 @@ def main() -> None:
     save_line_plot(history_df, out_dir / "val_accuracy_by_model.png", "val_accuracy", "Validation Accuracy", "Validation Accuracy by Model")
     save_grouped_bar(test_df, out_dir / "test_metrics_grouped_bar.png")
     save_heatmap(test_df, out_dir / "test_metrics_heatmap.png")
-
-    print(f"Saved plots and summary to: {out_dir}")
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
+    logging.info(f"Saved plots and summary to: {out_dir}")
 
 
 if __name__ == "__main__":

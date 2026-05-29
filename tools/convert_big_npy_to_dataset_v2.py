@@ -9,6 +9,7 @@ from typing import Dict, Iterable, List, Tuple
 import numpy as np
 import yaml
 from PIL import Image
+import logging
 
 
 def load_config(path: Path) -> Dict:
@@ -158,7 +159,8 @@ def main() -> None:
 
     cfg = load_config(Path(args.config))
     result = convert(cfg, Path(args.output_dir), args.preview_mode, args.limit)
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
+    logging.info(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

@@ -4,6 +4,7 @@
 """
 import numpy as np
 from pathlib import Path
+import logging
 
 root = Path("datasets")
 root.mkdir(exist_ok=True)
@@ -35,5 +36,5 @@ md = Path("model_data")
 md.mkdir(exist_ok=True)
 with (md / "cls_classes.txt").open("w", encoding="utf-8") as f:
     f.write("background\nforeground\n")
-
-print("Dummy datasets written to 'datasets/'")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
+logging.info("Dummy datasets written to 'datasets/'")
