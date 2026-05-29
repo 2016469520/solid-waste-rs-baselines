@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import time
+import logging
 from pathlib import Path
 from typing import Any, Dict, Tuple
 
@@ -9,6 +10,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 from .config import add_common_args, apply_cli_overrides, load_config
 from .datasets import NpyPatchDataset, dataset_summary, make_balanced_sampler
@@ -83,12 +85,14 @@ def make_scheduler(cfg: Dict[str, Any], optimizer: torch.optim.Optimizer):
     return None
 
 
-def train_one_epoch(model, loader, optimizer, criterion, device, scaler, amp: bool) -> Dict[str, float]:
+def train_one_epoch(model, loader, optimizer, criterion, device, scaler, amp: bool, epoch: int | None = None) -> Dict[str, float]:
     model.train()
     total_loss = 0.0
     all_prob = []
     all_true = []
-    for images, labels in loader:
+    it = loader
+    desc = f"train{f' epoch {epoch:03d}' if epoch is not None else ''}"
+    for images, labels in tqdm(it, desc=desc, leave=False):
         images = images.to(device, non_blocking=True)
         labels = labels.to(device, non_blocking=True)
         optimizer.zero_grad(set_to_none=True)
@@ -154,9 +158,10 @@ def main() -> None:
     bad_epochs = 0
     history = []
 
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
     for epoch in range(1, int(cfg["train"]["epochs"]) + 1):
         start = time.time()
-        train_metrics = train_one_epoch(model, train_loader, optimizer, criterion, device, scaler, amp)
+        train_metrics = train_one_epoch(model, train_loader, optimizer, criterion, device, scaler, amp, epoch)
         val_true, val_prob = predict_loader(model, val_loader, device)
         sweep = threshold_sweep(val_true, val_prob, thresholds)
         best_threshold_row = best_by(sweep, key="f1")
@@ -179,7 +184,7 @@ def main() -> None:
         save_csv(run_dir / "threshold_sweep_val.csv", sweep, list(sweep[0].keys()))
 
         score = float(row.get(monitor, row.get("val_f1", 0.0)))
-        print(
+        logging.info(
             f"[{model_name}] epoch {epoch:03d} "
             f"train_loss={train_metrics['loss']:.4f} val_f1={val_metrics['f1']:.4f} "
             f"val_recall={val_metrics['recall']:.4f} thr={val_metrics['best_threshold']:.4f}"
@@ -193,7 +198,7 @@ def main() -> None:
             bad_epochs += 1
         torch.save(checkpoint_payload(model, cfg, val_metrics, epoch), run_dir / "last.pt")
         if bad_epochs >= patience:
-            print(f"Early stopping after {bad_epochs} epochs without improvement.")
+            logging.info(f"Early stopping after {bad_epochs} epochs without improvement.")
             break
 
 

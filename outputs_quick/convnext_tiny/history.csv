@@ -1,0 +1,2 @@
+epoch,lr,seconds,train_threshold,train_accuracy,train_precision,train_recall,train_specificity,train_f1,train_kappa,train_tp,train_tn,train_fp,train_fn,train_loss,val_threshold,val_accuracy,val_precision,val_recall,val_specificity,val_f1,val_kappa,val_tp,val_tn,val_fp,val_fn,val_auc,val_ap,val_best_threshold
+1,1e-06,1.562,0.5,0.465,0.46875,0.44554455445544555,0.48484848484848486,0.45685279187817257,-0.06957217113154739,45,48,51,56,0.9029919219017029,0.6990909090909091,0.62,0.575,0.92,0.32,0.7076923076923077,0.24,23,8,17,2,0.6416,0.6415682023529067,0.6990909090909091

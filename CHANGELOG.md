@@ -11,3 +11,8 @@
 - Added `data_v2` conversion tooling to split large `.npy` arrays into inspectable single-sample `.npy` files, preview PNGs and `samples.csv`.
 - Converted the local default `4201` dataset into `data_v2` locally. Generated data is ignored by Git.
 
+- 2026-05-29: 小改进
+	- 将训练脚本 `src/swbaseline/train.py` 中零散的 `print` 替换为 `logging`，并在训练循环加入 `tqdm` 进度条以便监控训练进度。
+	- 将数据审计脚本 `src/swbaseline/audit_data.py` 的输出替换为 `logging`。
+	- 在 `requirements.txt` 中添加 `tqdm` 依赖。
+
