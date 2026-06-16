@@ -1,0 +1,53 @@
+{
+  "seed": 20260320,
+  "device": "auto",
+  "data": {
+    "root": "datasets",
+    "train_x": "x_train_4201.npy",
+    "train_y": "y_train_4201.npy",
+    "val_x": "x_val_4201.npy",
+    "val_y": "y_val_4201.npy",
+    "test_x": "x_test_4201.npy",
+    "test_y": "y_test_4201.npy",
+    "classes": "model_data/cls_classes.txt",
+    "input_size": 224,
+    "channels": 4,
+    "scale": 2047.0,
+    "positive_label": 1
+  },
+  "train": {
+    "epochs": 20,
+    "batch_size": 8,
+    "num_workers": 0,
+    "lr": 0.0001,
+    "min_lr": 1e-06,
+    "weight_decay": 0.01,
+    "optimizer": "adamw",
+    "scheduler": "cosine",
+    "amp": false,
+    "class_balanced_sampler": true,
+    "early_stop_patience": 12,
+    "monitor": "val_f1",
+    "threshold": 0.5
+  },
+  "model": {
+    "name": "resnet18",
+    "pretrained": false,
+    "dropout": 0.2
+  },
+  "augment": {
+    "enabled": false,
+    "hflip_p": 0.5,
+    "vflip_p": 0.5,
+    "rotate90": true,
+    "noise_std": 0.0
+  },
+  "thresholds": {
+    "start": 0.05,
+    "stop": 0.995,
+    "steps": 100
+  },
+  "output_dir": "outputs_long20",
+  "_config_path": "configs\\long20.yaml",
+  "_project_root": "E:\\固废\\代码\\cls_gf\\solid-waste-rs-baselines"
+}

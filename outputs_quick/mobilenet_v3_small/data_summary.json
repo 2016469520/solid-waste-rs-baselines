@@ -1,0 +1,59 @@
+{
+  "train": {
+    "x_path": "datasets\\x_train_4201.npy",
+    "y_path": "datasets\\y_train_4201.npy",
+    "x_shape": [
+      200,
+      224,
+      224,
+      4
+    ],
+    "x_dtype": "uint16",
+    "y_shape": [
+      200
+    ],
+    "y_dtype": "uint8",
+    "label_counts": {
+      "0": 100,
+      "1": 100
+    }
+  },
+  "val": {
+    "x_path": "datasets\\x_val_4201.npy",
+    "y_path": "datasets\\y_val_4201.npy",
+    "x_shape": [
+      50,
+      224,
+      224,
+      4
+    ],
+    "x_dtype": "uint16",
+    "y_shape": [
+      50
+    ],
+    "y_dtype": "uint8",
+    "label_counts": {
+      "0": 25,
+      "1": 25
+    }
+  },
+  "test": {
+    "x_path": "datasets\\x_test_4201.npy",
+    "y_path": "datasets\\y_test_4201.npy",
+    "x_shape": [
+      50,
+      224,
+      224,
+      4
+    ],
+    "x_dtype": "uint16",
+    "y_shape": [
+      50
+    ],
+    "y_dtype": "uint8",
+    "label_counts": {
+      "0": 25,
+      "1": 25
+    }
+  }
+}

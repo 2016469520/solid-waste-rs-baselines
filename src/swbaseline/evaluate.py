@@ -13,6 +13,7 @@ from .datasets import NpyPatchDataset
 from .metrics import average_precision, auc_score, best_by, binary_metrics, threshold_sweep
 from .models import create_model
 from .utils import ensure_dir, load_checkpoint, save_csv, save_json, resolve_device
+import logging
 
 
 @torch.no_grad()
@@ -84,7 +85,8 @@ def main() -> None:
         for i, (t, p) in enumerate(zip(y_true, y_prob))
     ]
     save_csv(out_dir / f"{args.split}_predictions.csv", pred_rows, ["index", "label", "prob_sw", "pred"])
-    print(metrics)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
+    logging.info(json.dumps(metrics, ensure_ascii=False))
 
 
 if __name__ == "__main__":

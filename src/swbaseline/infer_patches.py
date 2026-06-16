@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+import logging
 
 import torch
 from torch.utils.data import DataLoader
@@ -51,7 +52,8 @@ def main() -> None:
                 }
             )
     save_csv(Path(args.output), rows, ["filename", "prob_sw", "pred", "threshold"])
-    print(f"Saved {len(rows)} predictions to {args.output}")
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
+    logging.info(f"Saved {len(rows)} predictions to {args.output}")
 
 
 if __name__ == "__main__":

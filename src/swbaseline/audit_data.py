@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 
 import numpy as np
+import logging
 
 from .config import add_common_args, apply_cli_overrides, load_config
 
@@ -40,6 +41,7 @@ def main() -> None:
     parser = add_common_args(argparse.ArgumentParser())
     args = parser.parse_args()
     cfg = apply_cli_overrides(load_config(args.config), args)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
     data_root = Path(cfg["data"]["root"])
     report = {}
     for split in ("train", "val", "test"):
@@ -52,8 +54,8 @@ def main() -> None:
     out_dir = ensure_dir(Path(cfg["output_dir"]) / "_audit")
     save_json(out_dir / "data_report.json", report)
     for split, info in report.items():
-        print(f"{split}: shape={info['x_shape']} labels={info['label_counts']} pos_ratio={info['positive_ratio']:.4f}")
-    print(f"Saved report to {out_dir / 'data_report.json'}")
+        logging.info(f"{split}: shape={info['x_shape']} labels={info['label_counts']} pos_ratio={info['positive_ratio']:.4f}")
+    logging.info(f"Saved report to {out_dir / 'data_report.json'}")
 
 
 if __name__ == "__main__":
